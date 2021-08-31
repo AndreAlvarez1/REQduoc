@@ -1,0 +1,54 @@
+<div class="row encabezado f_pink text-light animated slideInDown">
+    <div class="col-6">
+        <h1 *ngIf="id === 'nuevo'" (click)="info()">Nuevo requerimiento</h1>
+        <h1 *ngIf="id !== 'nuevo'" (click)="info()">Editar requerimiento</h1>
+    </div>
+
+    <div class="col-6 mt-1 text-end">
+        <button class="btn btn-outline-light" routerLink="/requerimiento/nuevo">Crear nuevo requerimiento</button>
+      </div>
+
+
+    <div *ngIf = "tiendas.length > 0 " class="col-4">
+        <label>Selecciona una Sede</label>
+        <select class="form-control" name="tienda" [(ngModel)]="tienda.id" [ngModelOptions]="{standalone: true}" (change)="selectTienda($any($event.target).value)">
+            <option *ngIf="tienda.id === 0 " >Selecciona una Sede</option>    
+            <option *ngFor="let t of tiendas" [value] ='t.id'>{{t.tienda}}</option>
+         </select>  
+    </div>
+
+</div>
+
+
+<div *ngIf="tiendas.length > 0" class="row">
+    <div class="col-12 col-md-6 f_amarillo">
+        
+        <form *ngIf="asignaturas.length > 0" (ngSubmit)="guardarENC( f )" #f="ngForm" class="row formulario validate-form animated fadeIn">
+                
+                <div class="col-12 campo ">
+                    <label>Asignatura</label>
+                    <select class="form-control" name="asignatura" [(ngModel)]="req.ASIGNATURAID" [ngModelOptions]="{standalone: true}" (change)="selectAsignatura($any($event.target).value)">
+                        <option *ngIf="req.ASIGNATURAID === 0 " >Selecciona una Asignatura</option>    
+                        <option *ngFor="let a of asignaturas" [value] ='a.id'>{{a.ASIGNATURA}}</option>
+                     </select>                  
+                </div>
+
+                
+                <!-- <div class="campo ">
+                    <label>Password</label>
+                    <input class="form-control mt-2" type="password" name="password"  required [(ngModel)]="user.CLAVE" placeholder="tu codigo de gournet" >
+                </div> -->
+
+                <div class="mt-2">
+                    <button class="btn btn-primary btn-block" type="submit">
+                  Ingresar
+              </button>
+                </div>
+       </form>
+
+    </div>
+  
+    <div class="col-12 col-md-6">
+
+    </div>
+</div>

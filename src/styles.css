@@ -1,1 +1,108 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+    font-family: 'Titillium Web', sans-serif;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+h1{
+    font-size: 2.5em;
+    font-weight: 700;
+}
+
+.pad20{
+    padding:20px;
+}
+
+.pad40{
+    padding:40px 20px;
+}
+
+
+.f_morado{
+    background-color: #4d5fe3;
+}
+
+.f_gris {
+    background-color: #15151e;
+}
+
+.f_celeste {
+    background-color: #fbfbfd;
+}
+
+.f_amarillo{
+    background-color: #FBEEC1;
+}
+
+.f_black {
+    background-color: black;
+}
+
+.f_pink {
+    background-color: #F3507D;
+}
+
+.f_white {
+    background-color: white;
+}
+
+.f_azul {
+    background-color: #5878B0;
+}
+
+.f_crayola {
+    background-color: #EDDDD4;
+}
+
+
+.encabezado{
+    padding:60px 20px;
+}
+
+.encabezado h1{
+    font-size: 2.5em;
+    font-weight: 700;
+}
+
+.campo{
+    margin-bottom:10px;
+}
+
+
+.fondoModif {
+    background-color: rgba(0, 5, 46, 0.6);
+    position: fixed;
+    top: 0;
+    z-index: 1040;
+    height: 100vh;
+    width: 100%;
+}
+
+.formu {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    background: none;
+}
+
+.error{
+        color:red;
+        font-size: 0.8e;;
+}
+
+.lineaGris{
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+
+
+
+@media (min-width: 768px) {}
+
+@media (min-width: 992px) {}
+
+@media (min-width: 1200px) {}

@@ -1,0 +1,63 @@
+.der {
+    height: 50vh;
+    background-image: url(src/assets/img/log1.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+}
+
+h1 {
+    font-size: 3em;
+    color: #5878B0;
+    font-weight: 700;
+    margin-bottom: 0px;
+    line-height: 0.8em;
+}
+
+.izq {
+    height: 55vh;
+    background-image: url(src/assets/img/dot-grid.png);
+    background-repeat: repeat;
+}
+
+.chef {
+    padding-top: 20vh;
+}
+
+.formulario {
+    padding-top: 10vh;
+}
+
+.logo {
+    width: 70%;
+    margin-left: 15%;
+    margin-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+    .logo {
+        width: 50%;
+        margin-left: 25%;
+    }
+}
+
+@media (min-width: 992px) {
+    .izq {
+        height: 100vh;
+    }
+    .der {
+        height: 100vh;
+    }
+    .chef {
+        padding-top: 40vh;
+    }
+    .formulario {
+        padding-top: 35vh;
+    }
+    .logo {
+        width: 80%;
+        margin-left: 10%;
+    }
+}
+
+@media (min-width: 1200px) {}
