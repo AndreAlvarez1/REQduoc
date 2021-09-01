@@ -70,6 +70,7 @@ export class RequerimientoComponent implements OnInit {
                   this.tiendas = resp['datos'];
                   this.tienda = this.tiendas[0]; 
                   this.getAsignaturas(this.tienda.id)
+                  this.getProductos(this.tienda.id);
                   this.loading = false;})
   }
 
@@ -84,7 +85,7 @@ export class RequerimientoComponent implements OnInit {
               .subscribe( resp => { 
                 this.req = resp['datos'][0]; 
                 this.getDetalle(this.id);
-                this.getProductos(this.id);
+                
               })
 
   }
@@ -96,6 +97,7 @@ export class RequerimientoComponent implements OnInit {
   }
 
   getProductos(tiendaid){
+    console.log('productos', tiendaid)
     this.loadingProductos = true;
     this.conex.getDatos(`/productos/${tiendaid}`).subscribe( resp => { this.productos = resp['datos'];this.loadingProductos = false})
   }
