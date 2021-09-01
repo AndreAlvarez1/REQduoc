@@ -5,7 +5,7 @@
     </div>
 
     <div class="col-6 mt-1 text-end">
-        <button class="btn btn-outline-light" routerLink="/requerimiento/nuevo">Crear nuevo requerimiento</button>
+        <button class="btn btn-outline-light" routerLink="/requerimientos">Volver</button>
       </div>
 
 
@@ -20,35 +20,176 @@
 </div>
 
 
-<div *ngIf="tiendas.length > 0" class="row">
-    <div class="col-12 col-md-6 f_amarillo">
+<div *ngIf="tiendas.length > 0" class="izq row">
+    <div class="col-12 col-md-4 f_amarillo pad20">
         
         <form *ngIf="asignaturas.length > 0" (ngSubmit)="guardarENC( f )" #f="ngForm" class="row formulario validate-form animated fadeIn">
                 
-                <div class="col-12 campo ">
+                <div class="col-12 col-md-10 campo ">
                     <label>Asignatura</label>
                     <select class="form-control" name="asignatura" [(ngModel)]="req.ASIGNATURAID" [ngModelOptions]="{standalone: true}" (change)="selectAsignatura($any($event.target).value)">
-                        <option *ngIf="req.ASIGNATURAID === 0 " >Selecciona una Asignatura</option>    
+                        <option [value] ='0'>Selecciona una Asignatura</option>    
                         <option *ngFor="let a of asignaturas" [value] ='a.id'>{{a.ASIGNATURA}}</option>
                      </select>                  
                 </div>
 
                 
-                <!-- <div class="campo ">
-                    <label>Password</label>
-                    <input class="form-control mt-2" type="password" name="password"  required [(ngModel)]="user.CLAVE" placeholder="tu codigo de gournet" >
-                </div> -->
+                <div class="col-6 col-md-2 campo ">
+                    <label>Semana</label>
+                    <input class="form-control" type="number" name="semana"  required [(ngModel)]="req.NUMSEMANA" placeholder="semana" >
+                </div>
 
-                <div class="mt-2">
+                <div class="col-12 mt-2">
                     <button class="btn btn-primary btn-block" type="submit">
-                  Ingresar
+                  Guardar
               </button>
                 </div>
        </form>
+       <hr>
+       <div *ngIf="id != 0" class="row">
+           <div class="col-12">
+               <h1>Insumos</h1>
+               
+               <div *ngIf="!loadingDetalle" class="row">
+                <div *ngIf="detalle.length > 0" class="col-12 table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Codigo</th>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody  class="animated fadeIn">
+                            <tr class="pointer" *ngFor="let d of detalle ; index as i ">
+                            <!-- <tr class="pointer" *ngFor="let d of detalle | filter : { 'ASIGNATURA' : searchString, 'NUMSEMANA' : searchString, 'PROFE' : searchString, 'tienda' : searchString } : false ; index as i " (click)="selectReq(r)"> -->
+                                <td>{{ i + 1 }}</td>
+                                <td>{{d.CODIGO}}</td>
+                                <td>{{d.DESCRIPCIO | titlecase}}</td>                                
+                                <td>{{d.CANTIDAD }} {{d.UNIDAD }} </td>                                                             
+                                <td><i class="fas fa-pencil-alt text-success" (click)="editarIngrediente(d)"></i></td>                                
+                                <td><i class="fas fa-times text-danger" (click)="borrarIngrediente(d)"></i></td>                                
+                            </tr>
+                        </tbody>
+                    
+                      
+                    </table>
+                </div>
+                <div *ngIf="detalle.length < 1" class="col-12 text-center pad20 animated fadeIn">
+                    <p>No hay insumos aún para este requerimiento 😔</p>
+                 </div>
+            
+            
+               </div>
+               <div *ngIf="loadingDetalle"  class="row text-center pad20">
+                <div class="col-12">
+                    <i class="fas fa-spinner fa-2x fa-spin" ></i>
+                    <p class="animated heartBeat infinite mt-2">Cargando Datos</p>
+                </div>
+               </div>
+           
+           </div>
+       </div>
 
     </div>
-  
-    <div class="col-12 col-md-6">
+  <!-- ===================================== -->
+<!-- ============== DERECHA PRODUCTOS ================ -->
+<!-- ===================================== -->
+    <div *ngIf="id != 'nuevo' " class="col-12 col-md-8">
+        <div class="row header">
+            <div class="col-10">
+                <h1>Productos</h1>
+                <label>Buscador</label>
+                <input type="text" class="form-control" name="searchString" placeholder="Buscador..." [(ngModel)]="searchString" />
+            </div>
+        </div>
+
+        <div *ngIf="!loadingProductos" class="row" >
+            <div *ngIf="productos.length > 0" class="col-12 table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Código</th>
+                            <th>Producto</th>
+                            <th>Unidad</th>
+                            <th>Código Técnico</th>
+                        </tr>
+                    </thead>
+                    <tbody  class="animated fadeIn prods">
+                        <tr class="pointer" *ngFor="let p of productos | filter : { 'CODIGO' : searchString, 'DESCRIPCIO' : searchString, 'UNIDAD' : searchString, 'CODIGOTEC' : searchString } : false ; index as i " (click)="selectProducto(p)">
+                            <td>{{ i + 1 }}</td>
+                            <td>{{p.CODIGO}}</td>
+                            <td>{{p.DESCRIPCIO | titlecase }}</td>                                
+                            <td>{{p.UNIDAD }}</td>                                
+                            <td>{{p.CODIGOTEC }}</td>                                                         
+                        </tr>
+                    </tbody>
+                 
+                  
+                </table>
+            </div>
+          
+            <div *ngIf="productos.length < 1" class="col-12 text-center pad20 animated fadeIn">
+                    <p>No hay productos revisa tu conexion a internet 😔</p>
+            </div>
+            
+        </div>
+
+        <div *ngIf="loadingProductos"  class="row pad20 text-center">
+            <div class="col-12">
+                <i class="fas fa-hotdog fa-2x fa-spin text-primary" ></i>
+                <p class="animated heartBeat infinite mt-2">Cargando Datos</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- ===================================== -->
+<!-- ===================================== -->
+<!-- ===================================== -->
+<!-- ============== MODAL ================ -->
+<!-- ===================================== -->
+<!-- ===================================== -->
+<!-- ===================================== -->
+
+<div *ngIf="modalInsumo" class="row fondoModif animated fadeIn" style="margin:0">
+    <div class="col-12 animated slideInDown ">
+        
+        <div class="row text-light bg-dark pad40">
+            <div class="col-12">
+
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h1>Editar Insumo <i class="fas fa-times  pointer" (click)="modalInsumo = !modalInsumo"></i> </h1>
+                    </div>
+                  
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-md-4 offset-md-4 text-center">
+                        <h2>{{ingrediente.DESCRIPCIO}} <span>{{ingrediente.CODIGO}}</span></h2>
+                    </div>
+                    <div class="col-3 col-md-1 offset-md-5">
+                        <label>Cantidad</label>
+                        <input class="form-control" type="number" name="cant"  [(ngModel)]="ingrediente.CANTIDAD" placeholder="Cantidad" >
+                    </div>
+                    <div class="col-2">
+                        <label>Unidad</label>
+                        <p>{{ingrediente.UNIDAD}}</p>
+                    </div>
+                    <div class="col-12 col-md-4 offset-md-4 mt-2">
+                        <button class="btn btn-outline-light w-100" (click)="guardarIngrediente()">Guardar</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
 
     </div>
 </div>
