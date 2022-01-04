@@ -6,8 +6,8 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class ConectorService {
-  // public url = 'http://node.clubgournet.cl:9091'
-  public url = 'http://localhost:9092';
+  public url = 'https://node-duoc-dot-nodestats-335315.wn.r.appspot.com'
+  // public url = 'http://localhost:9092';
 
   constructor(private http:HttpClient,
               private router: Router) { }

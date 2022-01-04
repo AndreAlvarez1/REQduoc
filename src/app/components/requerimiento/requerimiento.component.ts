@@ -150,6 +150,10 @@ export class RequerimientoComponent implements OnInit {
                 if (tarea === 'insert'){
                   console.log('id', info.insertId);
                   this.router.navigateByUrl(`/requerimiento/${info.insertId}`);
+
+                  const myTimeout = setTimeout(this.refrescar, 1000);
+                  
+                  
                 }
 
 
@@ -160,6 +164,10 @@ export class RequerimientoComponent implements OnInit {
 
   }
 
+  refrescar(){
+    console.log('refresh')
+    window.location.reload();
+  }
 
   selectProducto(p){
     console.log('p', p);
