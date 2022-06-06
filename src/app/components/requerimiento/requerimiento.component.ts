@@ -185,7 +185,8 @@ export class RequerimientoComponent implements OnInit {
                                   CANTIDAD: 0, 
                                   UNIDAD: p.UNIDAD,
                                   status: 1,
-                                  DESCRIPCIO: p.DESCRIPCIO
+                                  DESCRIPCIO: p.DESCRIPCIO,
+                                  OBSER: ''
                                   }
        }
     //  this.modalInsumo = true;
@@ -204,29 +205,68 @@ export class RequerimientoComponent implements OnInit {
     this.defineCantidad(this.ingrediente.DESCRIPCIO, this.ingrediente.UNIDAD, this.ingrediente.CANTIDAD)
   }
   
-  guardarIngrediente(){
-    if (this.ingrediente.CANTIDAD < 0){
-      this.error('La cantidad debe ser mayor que 0');
-      return;
-    }
-    
-    
-    let tarea = 'insert';
-    if (this.ingrediente.id != 0){
-      tarea = 'update'
-    }
 
-    console.log('ingrediente final', this.ingrediente);
-    this.conex.guardarDato(`/post/DETREQ/${tarea}`, this.ingrediente)
-              .subscribe( resp => { 
-                console.log('guardé ingrediente', resp);
-                if( tarea === 'insert'){
-                  this.getDetalle(this.id);
-                }
-                this.modalInsumo = false;
-              })
+addComment(value){
+  console.log('editar comentario', value);
+  this.ingrediente = value;
+
+  let mensaje = 'Agrega una comentario'
+
+  if (this.ingrediente.OBSER != ''){
+    mensaje = `Mensaje guardado: ${this.ingrediente.OBSER}` 
   }
 
+  Swal.fire({
+    title: `${this.ingrediente.DESCRIPCIO}  `,
+    input: 'text',
+    inputLabel: mensaje,
+    showCancelButton: true,
+    inputValidator: (obs) => {
+      
+      if (!obs) {
+        return 'Tiene que poner un valor'
+      }
+      
+      console.log('largo', obs.length)
+
+      if (obs.length > 240){
+        return 'Mensaje muy largo';
+      }
+      
+      this.ingrediente.OBSER = obs;
+      this.guardarIngrediente()
+    }
+  })
+
+
+
+
+}
+
+
+
+guardarIngrediente(){
+  if (this.ingrediente.CANTIDAD < 0){
+    this.error('La cantidad debe ser mayor que 0');
+    return;
+  }
+  
+  
+  let tarea = 'insert';
+  if (this.ingrediente.id != 0){
+    tarea = 'update'
+  }
+
+  console.log('ingrediente final', this.ingrediente);
+  this.conex.guardarDato(`/post/DETREQ/${tarea}`, this.ingrediente)
+            .subscribe( resp => { 
+              console.log('guardé ingrediente', resp);
+              if( tarea === 'insert'){
+                this.getDetalle(this.id);
+              }
+              this.modalInsumo = false;
+            })
+}
 
 
 

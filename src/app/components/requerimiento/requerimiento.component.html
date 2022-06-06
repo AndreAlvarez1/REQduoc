@@ -9,12 +9,17 @@
       </div>
 
 
-    <div *ngIf = "tiendas.length > 0 " class="col-4">
+    <div *ngIf = "tiendas.length > 0 " class="col-12 col-md-4">
         <label>Selecciona una Sede</label>
         <select class="form-control" name="tienda" [(ngModel)]="tienda.id" [ngModelOptions]="{standalone: true}" (change)="selectTienda($any($event.target).value)">
             <option *ngIf="tienda.id === 0 " >Selecciona una Sede</option>    
             <option *ngFor="let t of tiendas" [value] ='t.id'>{{t.tienda}}</option>
          </select>  
+    </div>
+
+    <div *ngIf="id != 'nuevo' " class="col-12 col-md-4 offset-md-4">
+        <label>Observaciones</label>
+        <textarea  class="form-control" rows=3 name="OBSERENC" maxlength="240"  [(ngModel)]="req.OBSER" placeholder="Escribe aqui las observaciones" ></textarea>
     </div>
 
 </div>
@@ -40,7 +45,7 @@
                 </div>
 
                 <div class="col-12 mt-2">
-                    <button class="btn btn-primary btn-block" type="submit">
+                    <button class="btn btn-primary btn-block w-100" type="submit">
                   Guardar
               </button>
                 </div>
@@ -61,6 +66,7 @@
                                 <th>Cantidad</th>
                                 <th></th>
                                 <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody  class="animated fadeIn">
@@ -70,11 +76,11 @@
                                 <td>{{d.CODIGO}}</td>
                                 <td>{{d.DESCRIPCIO | titlecase}}</td>                                
                                 <td>{{d.CANTIDAD }} {{d.UNIDAD }} </td>                                                             
+                                <td><i class="far fa-comment-alt text-info" (click)="addComment(d)"></i></td>                                
                                 <td><i class="fas fa-pencil-alt text-success" (click)="editarIngrediente(d)"></i></td>                                
                                 <td><i class="fas fa-times text-danger" (click)="borrarIngrediente(d)"></i></td>                                
                             </tr>
                         </tbody>
-                    
                       
                     </table>
                 </div>

@@ -4,6 +4,7 @@ export class IngredienteModel {
     CODIGO: string;
     CANTIDAD: number; 
     UNIDAD: string; 
+    OBSER: string;
     status: number;
     DESCRIPCIO: string;
 
@@ -15,5 +16,7 @@ constructor() {
         this.status = 1;
         this.UNIDAD = '';
         this.DESCRIPCIO = '';
+        this.OBSER          = '';
+
     }
 }
