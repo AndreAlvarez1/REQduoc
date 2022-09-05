@@ -4,14 +4,16 @@ export class ReqModel {
     TIENDAID: number;
     NUMSEMANA: number; 
     USERID: string; 
+    OBSER: string;
     status: number;
 
 constructor() {
         this.id = 0;
-        this.ASIGNATURAID = 0;
-        this.TIENDAID = 0;
-        this.NUMSEMANA = 0;
-        this.USERID = ''; 
-        this.status = 1;
+        this.ASIGNATURAID   = 0;
+        this.TIENDAID       = 0;
+        this.NUMSEMANA      = 0;
+        this.USERID         = ''; 
+        this.OBSER          = '';
+        this.status         = 1;
     }
 }
